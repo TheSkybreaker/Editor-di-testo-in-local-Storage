@@ -65,15 +65,17 @@ export class App {
   /* altro metodo: se non ci sono file caricati crea un oggetto file e fa il push nell'array */
   /* altrimenti modifica il file assegnando i valori letti dal form*/
   saveText() {
-    if (this.openFile == null) {
+    if (this.openFile == null && this.title.value != "") {
       let doc = new FileDoc();
       doc.title = this.title.value;
       doc.text = tinymce.get(this.ui.editor).getContent();
       this.files.push(doc);
-    } else {
+    } else if (this.openFile != null && this.title.value != "") {
       this.openFile.title = this.title.value;
       this.openFile.text = tinymce.get(this.ui.editor).getContent();
       this.files[this.textId] = this.openFile;
+    } else {
+      this.files.splice(this.textId, 1); // Elimina il file in caso non ci siano presenti titoli
     }
     console.log("Testo Salvato");
     localStorage.setItem("Texts", JSON.stringify(this.files));
@@ -86,7 +88,7 @@ export class App {
   buildList() {
     this.file_list.innerHTML = "";
         this.files.forEach((element, index) => {
-            this.file_list.innerHTML += (`<li data-id="${index}" class="list-group-item list-group-item-action testi">${element.title}</li>`)
+            this.file_list.innerHTML += (`<li data-id="${index}" class="list-group-item testi">${element.title}</li>`)
         });
         $(".testi").click(this.showText.bind(this));
     }

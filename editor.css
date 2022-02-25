@@ -3,11 +3,11 @@
     height: 300px;
 }
 
-li {
+.testi {
   display: inline-block;
 }
 
-li:after {
+.testi:after {
   content: '';
   position: absolute;
   width: 100%;
@@ -20,7 +20,7 @@ li:after {
   transition: transform 0.25s ease-out;
 }
 
-li:hover:after {
+.testi:hover:after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
